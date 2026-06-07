@@ -279,6 +279,7 @@ s=d.getElementsByTagName('script')[0];
 <li class="toctree-l3"><a class="reference internal" href="../examples/deployment/web-server/">Burr in a web server</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../examples/deployment/infrastructure/">Provisioning Infrastructure/Deploying</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../examples/deployment/monitoring/">Monitoring in Production</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/deployment/aws/">AWS Deployment Example</a></li>
 </ul>
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../examples/guardrails/">🚧 Guardrails / Tests</a><input aria-label="Toggle navigation of 🚧 Guardrails / Tests" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -300,6 +301,7 @@ s=d.getElementsByTagName('script')[0];
 <li class="toctree-l2"><a class="reference internal" href="../concepts/state-machine/">Applications</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../concepts/transitions/">Transitions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../concepts/tracking/">Tracking Burr</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/s3-tracking-aws/">S3 Tracking on AWS (Concepts)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../concepts/state-persistence/">State Persistence</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../concepts/serde/">Serialization / Deserialization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../concepts/streaming-actions/">Streaming Actions</a></li>
@@ -1243,6 +1245,8 @@ s=d.getElementsByTagName('script')[0];
           <li><a href="../reference/persister/#burr.integrations.persisters.b_redis.RedisBasePersister.save">(burr.integrations.persisters.b_redis.RedisBasePersister method)</a>
 </li>
         </ul></li>
+        <li><a href="../reference/serde/#burr.integrations.serde.pydantic.SecurityWarning">SecurityWarning</a>
+</li>
         <li><a href="../reference/application/#burr.core.application.Application.sequence_id">sequence_id (burr.core.application.Application property)</a>
 </li>
         <li><a href="../reference/state/#burr.core.state.State.serialize">serialize() (burr.core.state.State method)</a>
@@ -1258,6 +1262,8 @@ s=d.getElementsByTagName('script')[0];
         <li><a href="../reference/serde/#burr.integrations.serde.pandas.serialize_pandas_df">serialize_pandas_df() (in module burr.integrations.serde.pandas)</a>
 </li>
         <li><a href="../reference/serde/#burr.integrations.serde.pydantic.serialize_pydantic">serialize_pydantic() (in module burr.integrations.serde.pydantic)</a>
+</li>
+        <li><a href="../reference/serde/#burr.integrations.serde.pydantic.set_allowlist">set_allowlist() (in module burr.integrations.serde.pydantic)</a>
 </li>
         <li><a href="../reference/persister/#burr.core.persistence.SQLitePersister.set_serde_kwargs">set_serde_kwargs() (burr.core.persistence.SQLitePersister method)</a>
 
@@ -1279,10 +1285,10 @@ s=d.getElementsByTagName('script')[0];
 </li>
         <li><a href="../reference/integrations/ray/#burr.integrations.ray.RayExecutor.shutdown">shutdown() (burr.integrations.ray.RayExecutor method)</a>
 </li>
-        <li><a href="../reference/lifecycle/#burr.lifecycle.default.SlowDownHook">SlowDownHook (class in burr.lifecycle.default)</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="../reference/lifecycle/#burr.lifecycle.default.SlowDownHook">SlowDownHook (class in burr.lifecycle.default)</a>
+</li>
         <li><a href="../reference/application/#burr.core.application.Application.spawning_parent_pointer">spawning_parent_pointer (burr.core.application.Application property)</a>
 </li>
         <li><a href="../reference/persister/#burr.core.persistence.SQLitePersister">SQLitePersister (class in burr.core.persistence)</a>

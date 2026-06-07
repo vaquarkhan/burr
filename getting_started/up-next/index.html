@@ -281,6 +281,7 @@ s=d.getElementsByTagName('script')[0];
 <li class="toctree-l3"><a class="reference internal" href="../../examples/deployment/web-server/">Burr in a web server</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../examples/deployment/infrastructure/">Provisioning Infrastructure/Deploying</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../examples/deployment/monitoring/">Monitoring in Production</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/deployment/aws/">AWS Deployment Example</a></li>
 </ul>
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../examples/guardrails/">🚧 Guardrails / Tests</a><input aria-label="Toggle navigation of 🚧 Guardrails / Tests" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -302,6 +303,7 @@ s=d.getElementsByTagName('script')[0];
 <li class="toctree-l2"><a class="reference internal" href="../../concepts/state-machine/">Applications</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../concepts/transitions/">Transitions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../concepts/tracking/">Tracking Burr</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/s3-tracking-aws/">S3 Tracking on AWS (Concepts)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../concepts/state-persistence/">State Persistence</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../concepts/serde/">Serialization / Deserialization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../concepts/streaming-actions/">Streaming Actions</a></li>
@@ -414,7 +416,7 @@ All of the following are pre-populated in the UI under <code class="docutils lit
 <p>You’ll need the env variable <code class="docutils literal notranslate"><span class="pre">OPENAI_API_KEY</span></code> set to your api key for this to work. If you don’t
 have one, you’ll still be able to run it and explore, you just won’t be able to chat.</p>
 <p>If you haven’t already:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>burr<span class="o">[</span>start<span class="o">]</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>apache-burr<span class="o">[</span>start<span class="o">]</span>
 </pre></div>
 </div>
 <p>Then:</p>
