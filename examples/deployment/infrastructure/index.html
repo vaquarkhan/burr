@@ -229,7 +229,7 @@ s=d.getElementsByTagName('script')[0];
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -307,6 +307,7 @@ s=d.getElementsByTagName('script')[0];
 <li class="toctree-l2"><a class="reference internal" href="../../../concepts/actions/">Actions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../concepts/state/">State</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../concepts/state-machine/">Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../concepts/human-in-the-loop/">Human in the Loop</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../concepts/transitions/">Transitions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../concepts/tracking/">Tracking Burr</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../concepts/s3-tracking-aws/">S3 Tracking on AWS (Concepts)</a></li>
@@ -340,6 +341,7 @@ s=d.getElementsByTagName('script')[0];
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/integrations/streamlit/">Streamlit</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/integrations/opentelemetry/">OpenTelemetry</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/integrations/traceloop/">Traceloop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/integrations/langfuse/">Langfuse</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/integrations/langchain/">Langchain</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/integrations/pydantic/">Pydantic</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/integrations/haystack/">Haystack</a></li>
@@ -356,6 +358,7 @@ s=d.getElementsByTagName('script')[0];
 <li class="toctree-l2"><a class="reference internal" href="../../../contributing/contributing/">Contributing</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../security/">Security</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../ecosystem/">Ecosystem</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">ASF</span></p>
@@ -405,7 +408,7 @@ s=d.getElementsByTagName('script')[0];
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
@@ -416,14 +419,7 @@ s=d.getElementsByTagName('script')[0];
 (AWS, vercel, etc…). Note we aim to have more examples here – see <a class="reference external" href="https://github.com/apache/burr/issues/390">this issue</a> to track!</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/apache/burr/tree/main/examples/deployment/aws/lambda">Deploying Burr in an AWS lambda function</a></p></li>
-<li><p><a class="reference external" href="https://github.com/apache/burr/tree/main/examples/deployment/aws/bentoml">Deploying Burr using BentoML</a></p></li>
 </ul>
-<section id="using-bentoml">
-<h2>Using BentoML<a class="headerlink" href="#using-bentoml" title="Link to this heading">¶</a></h2>
-<p><a class="reference external" href="https://github.com/bentoml/BentoML">BentoML</a> is a specialized tool to package, deploy, and manage AI services.
-For example, it allows you to create a REST API for your Burr application with minimal effort.
-See the <a class="reference external" href="https://github.com/apache/burr/tree/main/examples/deployment/aws/bentoml">Burr + BentoML example</a> for more information.</p>
-</section>
 </section>
 
         </article>
@@ -482,27 +478,8 @@ See the <a class="reference external" href="https://github.com/apache/burr/tree/
         
       </footer>
     </div>
-    <aside class="toc-drawer">
+    <aside class="toc-drawer no-toc">
       
-      
-      <div class="toc-sticky toc-scroll">
-        <div class="toc-title-container">
-          <span class="toc-title">
-            On this page
-          </span>
-        </div>
-        <div class="toc-tree-container">
-          <div class="toc-tree">
-            <ul>
-<li><a class="reference internal" href="#">Provisioning Infrastructure/Deploying</a><ul>
-<li><a class="reference internal" href="#using-bentoml">Using BentoML</a></li>
-</ul>
-</li>
-</ul>
-
-          </div>
-        </div>
-      </div>
       
       
     </aside>

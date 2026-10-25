@@ -307,6 +307,7 @@ s=d.getElementsByTagName('script')[0];
 <li class="toctree-l2"><a class="reference internal" href="../actions/">Actions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../state/">State</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../state-machine/">Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../human-in-the-loop/">Human in the Loop</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../transitions/">Transitions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tracking/">Tracking Burr</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../s3-tracking-aws/">S3 Tracking on AWS (Concepts)</a></li>
@@ -340,6 +341,7 @@ s=d.getElementsByTagName('script')[0];
 <li class="toctree-l3"><a class="reference internal" href="../../reference/integrations/streamlit/">Streamlit</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../reference/integrations/opentelemetry/">OpenTelemetry</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../reference/integrations/traceloop/">Traceloop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/integrations/langfuse/">Langfuse</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../reference/integrations/langchain/">Langchain</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../reference/integrations/pydantic/">Pydantic</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../reference/integrations/haystack/">Haystack</a></li>
@@ -356,6 +358,7 @@ s=d.getElementsByTagName('script')[0];
 <li class="toctree-l2"><a class="reference internal" href="../../contributing/contributing/">Contributing</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../security/">Security</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../ecosystem/">Ecosystem</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">ASF</span></p>
@@ -469,7 +472,7 @@ is called using <cite>await</cite> – if it blocks the event loop through a slo
 applications.</p>
 <p>In general, Burr gives you the constructs for synchronous and asynchronous execution. We usually do that by
 providing both methods (see specific references for more detail and reach out if you feel like we
-are missing a specific implementation). Furthermore, Burr suports the following APIs for both synchronous/asynchronous interfaces:</p>
+are missing a specific implementation). Furthermore, Burr supports the following APIs for both synchronous/asynchronous interfaces:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="../../reference/lifecycle/#hooksref"><span class="std std-ref">hooks</span></a></p></li>
 <li><p><a class="reference internal" href="../../reference/persister/#persistersref"><span class="std std-ref">persisters</span></a></p></li>
@@ -479,7 +482,7 @@ are missing a specific implementation). Furthermore, Burr suports the following 
 <h2>Nuances of Sync + Async together<a class="headerlink" href="#nuances-of-sync-async-together" title="Link to this heading">¶</a></h2>
 <p>We encourage to make a decision to either commit fully to sync or async. That said,
 there are cases where a hybrid situation may be desirable or unavoidable (testing, prototyping,
-legacy code, …) and we give some options to handle that. The table bellow shows the
+legacy code, …) and we give some options to handle that. The table below shows the
 possibilities Burr now supports – combining the set of synchronous/asynchronous.</p>
 <div class="table-wrapper colwidths-auto docutils container" id="id1">
 <table class="docutils align-default" id="id1">
