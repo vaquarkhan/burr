@@ -307,6 +307,7 @@ s=d.getElementsByTagName('script')[0];
 <li class="toctree-l2"><a class="reference internal" href="../../concepts/actions/">Actions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../concepts/state/">State</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../concepts/state-machine/">Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/human-in-the-loop/">Human in the Loop</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../concepts/transitions/">Transitions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../concepts/tracking/">Tracking Burr</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../concepts/s3-tracking-aws/">S3 Tracking on AWS (Concepts)</a></li>
@@ -340,6 +341,7 @@ s=d.getElementsByTagName('script')[0];
 <li class="toctree-l3"><a class="reference internal" href="../integrations/streamlit/">Streamlit</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../integrations/opentelemetry/">OpenTelemetry</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../integrations/traceloop/">Traceloop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../integrations/langfuse/">Langfuse</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../integrations/langchain/">Langchain</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../integrations/pydantic/">Pydantic</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../integrations/haystack/">Haystack</a></li>
@@ -356,6 +358,7 @@ s=d.getElementsByTagName('script')[0];
 <li class="toctree-l2"><a class="reference internal" href="../../contributing/contributing/">Contributing</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../security/">Security</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../ecosystem/">Ecosystem</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">ASF</span></p>
@@ -956,11 +959,12 @@ connect_kwargs: dict,</p>
 <li><p><strong>db_path</strong> – the path the DB will be stored.</p></li>
 <li><p><strong>table_name</strong> – the table name to store things under.</p></li>
 <li><p><strong>serde_kwargs</strong> – kwargs for state serialization/deserialization.</p></li>
-<li><p><strong>connect_kwargs</strong> – kwargs to pass to the aiosqlite.connect method.</p></li>
+<li><p><strong>connect_kwargs</strong> – kwargs to pass to sqlite3.connect, retained when copying or
+unpickling the persister.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>async sqlite persister instance with an open connection. You are responsible
+<dd class="field-even"><p>sqlite persister instance with an open connection. You are responsible
 for closing the connection yourself.</p>
 </dd>
 </dl>
@@ -983,7 +987,7 @@ It then sets the initialized field to True if the table exists.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="burr.core.persistence.SQLitePersister.list_app_ids">
 <span class="sig-name descname"><span class="pre">list_app_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">partition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#burr.core.persistence.SQLitePersister.list_app_ids" title="Link to this definition">¶</a></dt>
-<dd><p>Returns list of app IDs for a given primary key</p>
+<dd><p>Lists the app_ids for a given partition_key, each once, most recently saved first.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1074,8 +1078,8 @@ before the action was applied.</p></li>
 </pre></div>
 </div>
 <p>Then you should be able to create the class like this:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">PostgreSQLPersister</span><span class="o">.</span><span class="n">from_values</span><span class="p">(</span><span class="s2">&quot;postgres&quot;</span><span class="p">,</span> <span class="s2">&quot;postgres&quot;</span><span class="p">,</span> <span class="s2">&quot;my_password&quot;</span><span class="p">,</span>
-                                   <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">54320</span><span class="p">,</span> <span class="n">table_name</span><span class="o">=</span><span class="s2">&quot;burr_state&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">PostgreSQLPersister</span><span class="o">.</span><span class="n">from_values</span><span class="p">(</span><span class="s2">"postgres"</span><span class="p">,</span> <span class="s2">"postgres"</span><span class="p">,</span> <span class="s2">"my_password"</span><span class="p">,</span>
+                                   <span class="s2">"localhost"</span><span class="p">,</span> <span class="mi">54320</span><span class="p">,</span> <span class="n">table_name</span><span class="o">=</span><span class="s2">"burr_state"</span><span class="p">)</span>
 </pre></div>
 </div>
 <dl class="py method">
@@ -1162,7 +1166,7 @@ It then sets the initialized field to True if the table exists.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="burr.integrations.persisters.b_psycopg2.PostgreSQLPersister.list_app_ids">
 <span class="sig-name descname"><span class="pre">list_app_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">partition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#burr.integrations.persisters.b_psycopg2.PostgreSQLPersister.list_app_ids" title="Link to this definition">¶</a></dt>
-<dd><p>Lists the app_ids for a given partition_key.</p>
+<dd><p>Lists the app_ids for a given partition_key, each once, most recently saved first.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1199,7 +1203,7 @@ or a specific sequence_id for a given app_id.</p>
 <span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span>
 
 <dl>
-<dd><em class="sig-param"><span class="n"><span class="pre">partition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>,</dd>
+<dd><em class="sig-param"><span class="n"><span class="pre">partition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>,</dd>
 <dd><em class="sig-param"><span class="n"><span class="pre">app_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>,</dd>
 <dd><em class="sig-param"><span class="n"><span class="pre">sequence_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>,</dd>
 <dd><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>,</dd>
@@ -1308,7 +1312,7 @@ so this is an attempt to fix that in a backwards compatible way.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="burr.integrations.persisters.b_redis.RedisBasePersister.list_app_ids">
-<span class="sig-name descname"><span class="pre">list_app_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">partition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#burr.integrations.persisters.b_redis.RedisBasePersister.list_app_ids" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">list_app_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">partition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#burr.integrations.persisters.b_redis.RedisBasePersister.list_app_ids" title="Link to this definition">¶</a></dt>
 <dd><p>List the app ids for a given partition key.</p>
 </dd></dl>
 
@@ -1317,7 +1321,7 @@ so this is an attempt to fix that in a backwards compatible way.</p>
 <span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span>
 
 <dl>
-<dd><em class="sig-param"><span class="n"><span class="pre">partition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>,</dd>
+<dd><em class="sig-param"><span class="n"><span class="pre">partition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>,</dd>
 <dd><em class="sig-param"><span class="n"><span class="pre">app_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>,</dd>
 <dd><em class="sig-param"><span class="n"><span class="pre">sequence_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>,</dd>
 <dd><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em>,</dd>
@@ -1346,7 +1350,7 @@ so this is an attempt to fix that in a backwards compatible way.</p>
 <span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span>
 
 <dl>
-<dd><em class="sig-param"><span class="n"><span class="pre">partition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>,</dd>
+<dd><em class="sig-param"><span class="n"><span class="pre">partition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>,</dd>
 <dd><em class="sig-param"><span class="n"><span class="pre">app_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>,</dd>
 <dd><em class="sig-param"><span class="n"><span class="pre">sequence_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>,</dd>
 <dd><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>,</dd>
@@ -1397,18 +1401,18 @@ so this is an attempt to fix that in a backwards compatible way.</p>
 <span class="sig-paren">)</span><a class="headerlink" href="#burr.integrations.persisters.b_pymongo.MongoDBBasePersister" title="Link to this definition">¶</a></dt>
 <dd><p>A class used to represent a MongoDB Persister.</p>
 <p>Example usage:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">persister</span> <span class="o">=</span> <span class="n">MongoDBBasePersister</span><span class="o">.</span><span class="n">from_values</span><span class="p">(</span><span class="n">uri</span><span class="o">=</span><span class="s1">&#39;mongodb://user:pass@localhost:27017&#39;</span><span class="p">,</span>
-                                             <span class="n">db_name</span><span class="o">=</span><span class="s1">&#39;mydatabase&#39;</span><span class="p">,</span>
-                                             <span class="n">collection_name</span><span class="o">=</span><span class="s1">&#39;mystates&#39;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">persister</span> <span class="o">=</span> <span class="n">MongoDBBasePersister</span><span class="o">.</span><span class="n">from_values</span><span class="p">(</span><span class="n">uri</span><span class="o">=</span><span class="s1">'mongodb://user:pass@localhost:27017'</span><span class="p">,</span>
+                                             <span class="n">db_name</span><span class="o">=</span><span class="s1">'mydatabase'</span><span class="p">,</span>
+                                             <span class="n">collection_name</span><span class="o">=</span><span class="s1">'mystates'</span><span class="p">)</span>
 <span class="n">persister</span><span class="o">.</span><span class="n">save</span><span class="p">(</span>
-    <span class="n">partition_key</span><span class="o">=</span><span class="s1">&#39;example_partition&#39;</span><span class="p">,</span>
-    <span class="n">app_id</span><span class="o">=</span><span class="s1">&#39;example_app&#39;</span><span class="p">,</span>
+    <span class="n">partition_key</span><span class="o">=</span><span class="s1">'example_partition'</span><span class="p">,</span>
+    <span class="n">app_id</span><span class="o">=</span><span class="s1">'example_app'</span><span class="p">,</span>
     <span class="n">sequence_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">position</span><span class="o">=</span><span class="s1">&#39;example_position&#39;</span><span class="p">,</span>
-    <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">State</span><span class="p">({</span><span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;value&#39;</span><span class="p">}),</span>
-    <span class="n">status</span><span class="o">=</span><span class="s1">&#39;completed&#39;</span>
+    <span class="n">position</span><span class="o">=</span><span class="s1">'example_position'</span><span class="p">,</span>
+    <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="o">.</span><span class="n">State</span><span class="p">({</span><span class="s1">'key'</span><span class="p">:</span> <span class="s1">'value'</span><span class="p">}),</span>
+    <span class="n">status</span><span class="o">=</span><span class="s1">'completed'</span>
 <span class="p">)</span>
-<span class="n">loaded_state</span> <span class="o">=</span> <span class="n">persister</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">partition_key</span><span class="o">=</span><span class="s1">&#39;example_partition&#39;</span><span class="p">,</span> <span class="n">app_id</span><span class="o">=</span><span class="s1">&#39;example_app&#39;</span><span class="p">,</span> <span class="n">sequence_id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">loaded_state</span> <span class="o">=</span> <span class="n">persister</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">partition_key</span><span class="o">=</span><span class="s1">'example_partition'</span><span class="p">,</span> <span class="n">app_id</span><span class="o">=</span><span class="s1">'example_app'</span><span class="p">,</span> <span class="n">sequence_id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">loaded_state</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1657,9 +1661,9 @@ connect_kwargs: dict,</p>
 <span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_AsyncPersisterContextManager</span></span></span><a class="headerlink" href="#burr.integrations.persisters.b_aiosqlite.AsyncSQLitePersister.from_values" title="Link to this definition">¶</a></dt>
 <dd><p>Creates a new instance of the AsyncSQLitePersister from passed in values.</p>
 <p>Can be used with <code class="docutils literal notranslate"><span class="pre">await</span></code> or as an async context manager:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">persister</span> <span class="o">=</span> <span class="k">await</span> <span class="n">AsyncSQLitePersister</span><span class="o">.</span><span class="n">from_values</span><span class="p">(</span><span class="n">db_path</span><span class="o">=</span><span class="s2">&quot;test.db&quot;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">persister</span> <span class="o">=</span> <span class="k">await</span> <span class="n">AsyncSQLitePersister</span><span class="o">.</span><span class="n">from_values</span><span class="p">(</span><span class="n">db_path</span><span class="o">=</span><span class="s2">"test.db"</span><span class="p">)</span>
 <span class="c1"># or</span>
-<span class="k">async</span> <span class="k">with</span> <span class="n">AsyncSQLitePersister</span><span class="o">.</span><span class="n">from_values</span><span class="p">(</span><span class="n">db_path</span><span class="o">=</span><span class="s2">&quot;test.db&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">persister</span><span class="p">:</span>
+<span class="k">async</span> <span class="k">with</span> <span class="n">AsyncSQLitePersister</span><span class="o">.</span><span class="n">from_values</span><span class="p">(</span><span class="n">db_path</span><span class="o">=</span><span class="s2">"test.db"</span><span class="p">)</span> <span class="k">as</span> <span class="n">persister</span><span class="p">:</span>
     <span class="o">...</span>
 </pre></div>
 </div>
@@ -1696,7 +1700,7 @@ It then sets the initialized field to True if the table exists.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="burr.integrations.persisters.b_aiosqlite.AsyncSQLitePersister.list_app_ids">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list_app_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">partition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#burr.integrations.persisters.b_aiosqlite.AsyncSQLitePersister.list_app_ids" title="Link to this definition">¶</a></dt>
-<dd><p>Returns list of app IDs for a given primary key</p>
+<dd><p>Lists the app_ids for a given partition_key, each once, most recently saved first.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1816,8 +1820,8 @@ explaining why a new implementation, performance review and comparison to aiopg 
 </pre></div>
 </div>
 <p>Then you should be able to create the class like this:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="k">await</span> <span class="n">AsyncPostgreSQLPersister</span><span class="o">.</span><span class="n">from_values</span><span class="p">(</span><span class="s2">&quot;postgres&quot;</span><span class="p">,</span> <span class="s2">&quot;postgres&quot;</span><span class="p">,</span> <span class="s2">&quot;my_password&quot;</span><span class="p">,</span>
-                                   <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">54320</span><span class="p">,</span> <span class="n">table_name</span><span class="o">=</span><span class="s2">&quot;burr_state&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="k">await</span> <span class="n">AsyncPostgreSQLPersister</span><span class="o">.</span><span class="n">from_values</span><span class="p">(</span><span class="s2">"postgres"</span><span class="p">,</span> <span class="s2">"postgres"</span><span class="p">,</span> <span class="s2">"my_password"</span><span class="p">,</span>
+                                   <span class="s2">"localhost"</span><span class="p">,</span> <span class="mi">54320</span><span class="p">,</span> <span class="n">table_name</span><span class="o">=</span><span class="s2">"burr_state"</span><span class="p">)</span>
 </pre></div>
 </div>
 <dl class="py method">
@@ -1958,7 +1962,7 @@ It then sets the initialized field to True if the table exists.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="burr.integrations.persisters.b_asyncpg.AsyncPostgreSQLPersister.list_app_ids">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list_app_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">partition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#burr.integrations.persisters.b_asyncpg.AsyncPostgreSQLPersister.list_app_ids" title="Link to this definition">¶</a></dt>
-<dd><p>Lists the app_ids for a given partition_key.</p>
+<dd><p>Lists the app_ids for a given partition_key, each once, most recently saved first.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1995,7 +1999,7 @@ or a specific sequence_id for a given app_id.</p>
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span>
 
 <dl>
-<dd><em class="sig-param"><span class="n"><span class="pre">partition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>,</dd>
+<dd><em class="sig-param"><span class="n"><span class="pre">partition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>,</dd>
 <dd><em class="sig-param"><span class="n"><span class="pre">app_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>,</dd>
 <dd><em class="sig-param"><span class="n"><span class="pre">sequence_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>,</dd>
 <dd><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>,</dd>
@@ -2109,7 +2113,7 @@ It inherits from the AsyncBaseStatePersister class.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="burr.integrations.persisters.b_redis.AsyncRedisBasePersister.list_app_ids">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list_app_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">partition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#burr.integrations.persisters.b_redis.AsyncRedisBasePersister.list_app_ids" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list_app_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">partition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#burr.integrations.persisters.b_redis.AsyncRedisBasePersister.list_app_ids" title="Link to this definition">¶</a></dt>
 <dd><p>List the app ids for a given partition key.</p>
 </dd></dl>
 
@@ -2118,7 +2122,7 @@ It inherits from the AsyncBaseStatePersister class.</p>
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span>
 
 <dl>
-<dd><em class="sig-param"><span class="n"><span class="pre">partition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>,</dd>
+<dd><em class="sig-param"><span class="n"><span class="pre">partition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>,</dd>
 <dd><em class="sig-param"><span class="n"><span class="pre">app_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>,</dd>
 <dd><em class="sig-param"><span class="n"><span class="pre">sequence_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>,</dd>
 <dd><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em>,</dd>
@@ -2147,7 +2151,7 @@ It inherits from the AsyncBaseStatePersister class.</p>
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span>
 
 <dl>
-<dd><em class="sig-param"><span class="n"><span class="pre">partition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>,</dd>
+<dd><em class="sig-param"><span class="n"><span class="pre">partition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>,</dd>
 <dd><em class="sig-param"><span class="n"><span class="pre">app_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>,</dd>
 <dd><em class="sig-param"><span class="n"><span class="pre">sequence_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>,</dd>
 <dd><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>,</dd>
